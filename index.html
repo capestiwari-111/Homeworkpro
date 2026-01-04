@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Q&A</title>
+  <style>
+    body {font-family: Arial; text-align: center; background: #2c3e50; margin: 0; color: white;}
+    .container {max-width: 600px; margin: 50px auto; padding: 30px; background: #34495e; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);}
+    input[type="text"] {padding: 12px; width: 80%; border: none; border-radius: 5px; margin: 8px;}
+    button {padding: 12px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;}
+    #answer {margin-top: 20px; font-size: 16px; color: #ecf0f1;}
+    footer {margin-top: 30px; font-size: 14px; color: #bdc3c7;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>                               
+       <input id="question" type="text" placeholder="Type your question...">
+    <br><br>
+    <button onclick="getAnswer()">Ask Question</button>
+    <p id="answer"></p>
+  </div>
+  <footer>
+    <p>Employees: 1 | Website Testers: 2 | Chief: 1</p>
+    <p>Made by Virat Tiwari (capes)</p>
+    <p> contact for promotion (ads) :gmail- capestiwari@gmail.com   
+  </footer>
+
+  <script>
+    const apiKey = "98d2101573864c98b9f547f5e8ea0b09"; 
+    const apiUrl = "https://api.meta.ai/v1/ask"; 
+
+    async function getAnswer() {
+      let q = document.getElementById("question").value;
+      try {
+        let response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q })
+        });
+        let data = await response.json();
+        document.getElementById("answer").innerText = data.answer || "No answer found.";
+      } catch (e) {
+        document.getElementById("answer").innerText = "Error: " + e.message;
+      }
+    }
+  </script>
+</body>
+</html>
